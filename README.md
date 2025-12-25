@@ -31,4 +31,6 @@ Datasets can be downloaded from HuggingFace:
 - [FreeGave-GoPro](https://huggingface.co/datasets/scintigimcki/FreeGave-GoPro)
 
 ## 🔑 Train
+```
 bash train_eval.sh
+```
