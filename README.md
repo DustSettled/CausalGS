@@ -1,5 +1,34 @@
 # CausalGS: Learning Physical Causality of 3D Dynamic Scenes with Gaussian Representations
 <img width="1121" height="502" alt="屏幕截图 2025-12-25 194714" src="https://github.com/user-attachments/assets/4fc52fd4-f390-4d21-8c63-883f27932baa" />
-Learning a physical model from video data that can comprehend physical laws and predict the future trajectories of objects is a formidable challenge in artificial intelligence. Prior approaches either leverage various PDEs as soft constraints in the form of PINN losses, or integrate physics simulators into neural networks; however, they often rely on strong priors or their physical identification accuracy is tightly coupled with the fidelity of geometry reconstruction.
-In this paper, we propose CausalGS, a framework that learns the causal dynamics of complex dynamic 3D scenes solely from multi-view videos, while dispensing with the reliance on explicit priors. At its core is an inverse physics inference module that decouples the complex dynamics problem from the video into the joint inference of two factors: the initial velocity field representing the scene's kinematics, and the intrinsic material properties governing its dynamics. This inferred physical information then drives a physics simulator to achieve a physically consistent scene evolution.
-Extensive experiments demonstrate that CausalGS surpasses the state-of-the-art on the highly challenging task of long-term future frame extrapolation, while also exhibiting advanced performance in novel view interpolation. Crucially, our work shows that, without any human annotation, the model is able to learn the complex interactions between multiple physical properties and understand the causal relationships driving the scene's dynamic evolution, solely from visual observations.
+
+## ⚙️ Installation
+```shell script
+git clone https://github.com/DustSettled/CausalGS.git --recursive
+cd CausalGS
+
+### CUDA 12.4
+conda env create -f env.yml
+conda activate CausalGS
+
+# CUDA 12.4
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+
+# install gaussian requirements
+pip install submodules/depth-diff-gaussian-rasterization
+pip install submodules/simple-knn
+```
+
+## 💾 Datasets
+All the datasets will be uploaded soon. We organize the dataset following [D-NeRF](https://github.com/albertpumarola/D-NeRF) convention.
+We split the dataset as:
+- **train**: contains the frames within observed time interval, used for training the model.
+- **val**: contains the frames within observed time interval but for novel views, used for evaluating *novel-view interpolation*.
+- **test**: contains the frames in unobserved **future** time for both observed and novel views, used for evaluating *future extrapolation*.
+
+Datasets can be downloaded from HuggingFace: 
+- [Dynamic Objects](https://huggingface.co/datasets/scintigimcki/DynamicObjects)
+- [Dynamic Indoor Scenes](https://huggingface.co/datasets/scintigimcki/DynamicIndoorScenes)
+- [FreeGave-GoPro](https://huggingface.co/datasets/scintigimcki/FreeGave-GoPro)
+
+## 🔑 Train
+bash train_eval.sh
